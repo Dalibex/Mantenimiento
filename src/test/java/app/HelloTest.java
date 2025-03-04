@@ -10,7 +10,7 @@ public class HelloTest {
     @Test
     @DisplayName("El metodo hello world debe de devolver Hello World 🙋🏻‍♀️")
     public void helloWorld_StringHelloWorld_ReturnTrue(){
-        String input = "Hella + World";
+        String input = "Hello + World";
         
         String compute = helloWorld();
         
