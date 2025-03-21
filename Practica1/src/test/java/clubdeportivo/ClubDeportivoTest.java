@@ -1,3 +1,7 @@
+//
+// Alumnos Grupo: Daniel Linares Bernal, Julian David Lemus Rubiano
+//
+
 package clubdeportivo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -102,11 +106,18 @@ public class ClubDeportivoTest {
     @DisplayName("El test debe devolver los espacios que quedan libres en la actividad tras matricular")
     public void Matricular_HayPlazasLibres_SeMatriculaCorrectamente() throws ClubException {
         Grupo g = new Grupo("005", "Baloncesto", 10, 5, 40.0);
+        Grupo g2 = new Grupo("006", "Futbol", 10, 5, 40.0);
 
         clubDeportivo.anyadirActividad(g);
-        clubDeportivo.matricular("Baloncesto", 3);
+        clubDeportivo.anyadirActividad(g2);
 
+        clubDeportivo.matricular("Baloncesto", 3);
         assertEquals(2, clubDeportivo.plazasLibres("Baloncesto"));
+
+        clubDeportivo.matricular("Baloncesto", 0);
+        clubDeportivo.matricular("Baloncesto", 2);
+        assertEquals(0, clubDeportivo.plazasLibres("Baloncesto"));
+        assertEquals(0, clubDeportivo.plazasLibres("tenis"));
     }
 
     @Test

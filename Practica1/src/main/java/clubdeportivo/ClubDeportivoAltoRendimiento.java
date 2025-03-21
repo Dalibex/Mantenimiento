@@ -1,6 +1,5 @@
 package clubdeportivo;
 
-
 public class ClubDeportivoAltoRendimiento extends ClubDeportivo{
 	private int maximoPersonasGrupo;
 	private double incremento;

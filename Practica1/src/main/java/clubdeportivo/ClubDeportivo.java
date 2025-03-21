@@ -49,7 +49,7 @@ public class ClubDeportivo {
 		}
 		int pos = buscar(g);
 		if (pos == -1) { // El grupo es nuevo
-			grupos[ngrupos] = g;
+			grupos[ngrupos] = g; //aumentar el tamañao del array CORREGIR
 			ngrupos++;
 		} else { // El grupo ya existe --> modificamos las plazas
 			grupos[pos].actualizarPlazas(g.getPlazas());
@@ -75,7 +75,7 @@ public class ClubDeportivo {
 		}
 		int i = 0;
 		while (i < ngrupos && npersonas > 0) {
-			if (actividad.equals(grupos[i].getActividad())) {
+			if (actividad.equals(grupos[i].getActividad())) { 
 				int plazasGrupo = grupos[i].plazasLibres();
 				if (npersonas >= plazasGrupo) {
 					grupos[i].matricular(plazasGrupo);
