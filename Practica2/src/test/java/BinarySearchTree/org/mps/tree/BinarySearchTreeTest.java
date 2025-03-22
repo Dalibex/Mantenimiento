@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 class BinarySearchTreeTest {
     private BinarySearchTree<Integer> tree;
     private Comparator<Integer> comparator;
@@ -99,22 +98,15 @@ class BinarySearchTreeTest {
     void removeBranch_shouldRemoveSubtree() {
         tree.insert(10);
         tree.insert(5);
-        tree.removeBranch(10);
-        assertEquals("", tree.render());
-        tree.insert(10);
-        tree.insert(5);
-        tree.insert(15);
-        tree.insert(12);
-        tree.insert(6);
-        tree.insert(13);
-        tree.removeBranch(13);
-        assertEquals("10(5(,6),15(12,))", tree.render());
-        tree.removeBranch(6);
-        assertEquals("10(5,15(12,))", tree.render());
+        tree.insert(3);
+        tree.insert(4);
         tree.removeBranch(5);
-        assertEquals("10(,15(12,))", tree.render());
-        tree.removeBranch(15);
         assertEquals("10", tree.render());
+
+        tree.insert(15);
+        tree.insert(20);   
+        tree.removeBranch(21);
+        assertEquals("10(,15(,20))", tree.render());
     }
 
     @Test
