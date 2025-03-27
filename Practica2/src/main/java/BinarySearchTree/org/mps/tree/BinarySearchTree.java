@@ -1,6 +1,7 @@
 package BinarySearchTree.org.mps.tree;
 
 import java.util.Comparator;
+import java.util.List;
 
 public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
     private Comparator<T> comparator;
@@ -9,6 +10,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
     private BinarySearchTree<T> right;
     private static int contador = 0;
 
+    // METODO RENDER PARA MOSTRAR EL ARBOL
     public String render(){
         String render = "";
 
@@ -38,6 +40,9 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
         this.right = null;
     }
 
+    // ---------------------------------------------------------------------
+    // ---------------------- Basic operations -----------------------------
+    // ---------------------------------------------------------------------
     @Override
     public void insert(T value) { // Esto no inserta si el numero es igual a uno que ya esté en el árbol
         if(this.value == null) {
@@ -78,7 +83,14 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
             throw new BinarySearchTreeException("Árbol vacío");
         }
         int comparison = comparator.compare(value, this.value);
-        return comparison==0;
+        if (comparison == 0) {
+            return true;
+        } else if (comparison < 0 && this.left != null) {
+            return this.left.contains(value);
+        } else if (comparison > 0 && this.right != null) {
+            return this.right.contains(value);
+        }
+        return false;
     }
 
     @Override
@@ -94,7 +106,8 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
     }
 
     @Override
-    public T maximum() { // Lo mismo que el anterior pero con el mayor
+    public T maximum() {
+        // Lo mismo que el anterior pero con el mayor
         if(this.value == null) {
             throw new BinarySearchTreeException("Árbol vacío");
         }
@@ -151,7 +164,45 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
         return 1 + Math.max(leftDepth, rightDepth); // Devolvemos 1 del padre + el hijo que llegue más lejos (profundo)
     }
 
-    // Complex operations
-    // (Estas operaciones se incluirán más adelante para ser realizadas en la segunda
-    // sesión de laboratorio de esta práctica)
+    // ------------------------------------------------------------------------
+    // ---------------------- Complex operations ------------------------------
+    // ------------------------------------------------------------------------
+
+    @Override
+    public void removeValue (T value) {
+        if(this.value == null) {
+            throw new BinarySearchTreeException("Árbol vacío");
+        }
+        else if (contains(value) == false) {
+            throw new BinarySearchTreeException("Elemento no presente en el árbol");
+        }
+        else {
+            int comparison = comparator.compare(value, this.value);
+            if (comparison == 0) {
+                this.value = null;
+            } else if (comparison < 0 && this.left != null) {
+                if (comparator.compare(value, this.left.value) == 0) {
+                    this.left.value = null;
+                } else {
+                    this.left.removeValue(value);
+                }
+            } else if (comparison > 0 && this.right != null) {
+                if (comparator.compare(value, this.right.value) == 0) {
+                    this.right.value = null;
+                } else {
+                    this.right.removeValue(value);
+                }
+            }
+        }
+    }
+
+    @Override
+    public List<T> inOrder() {
+        return null;
+    }
+
+    @Override
+    public void balance() {
+
+    }
 }
