@@ -49,8 +49,17 @@ public class AdvertisementBoard {
         if (advertisement.advertiser.equals(BOARD_OWNER))
             advertisementList.add(advertisement);
         else {
-            if (advertiserDatabase.advertiserIsRegistered(advertisement.advertiser) &&
-                    paymentGateway.advertiserHasFunds(advertisement.advertiser)) {
+            boolean isBoardFull = advertisementList.size() >= MAX_BOARD_SIZE;
+            boolean isAdvertiserRegisteredAndHasFunds = advertiserDatabase.advertiserIsRegistered(advertisement.advertiser) &&
+                    paymentGateway.advertiserHasFunds(advertisement.advertiser);
+            boolean isAdvertisementAlreadyPublished;
+            Optional<Advertisement> none = Optional.empty();
+            if (findByTitle(advertisement.title) != none) {
+                isAdvertisementAlreadyPublished = true;
+            } else {
+                isAdvertisementAlreadyPublished = false;
+            }
+            if (isAdvertiserRegisteredAndHasFunds && !isAdvertisementAlreadyPublished) {
                 advertisementList.add(advertisement);
                 paymentGateway.chargeAdvertiser(advertisement.advertiser);
             }

@@ -7,7 +7,7 @@ public class Service {
     public Service(Database database) {
         this.database = database;
     }
-
+    
     public boolean query(String query) {
         return database.isAvailable();
     }

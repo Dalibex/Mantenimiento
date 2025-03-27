@@ -17,7 +17,7 @@ public class ServiceTest {
 
     @Test
         public void query_WhenDatabaseAvailable_ReturnTrue() {
-        Database databaseMock = mock(Database.class);
+            Database databaseMock = mock(Database.class);
             when(databaseMock.isAvailable()).thenReturn(true);
             Service t = new Service(databaseMock); 
 

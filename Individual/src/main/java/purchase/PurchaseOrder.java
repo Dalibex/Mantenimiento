@@ -9,11 +9,11 @@ public class PurchaseOrder {
     this.amountToBuy = amountToBuy;
   }
 
-  public void purchase(Warehouse warehouse) {
-    if (warehouse.thereAreProducts(productName, amountToBuy)) {
-      warehouse.remove(productName, amountToBuy);
+    public void purchase(Warehouse warehouse) {
+      if (warehouse.thereAreProducts(productName, amountToBuy)) {
+        warehouse.remove(productName, amountToBuy);
+      }
     }
-  }
 
   public int search(String name, Warehouse warehouse) {
     if(!name.isEmpty() && warehouse.contains(name)) {
