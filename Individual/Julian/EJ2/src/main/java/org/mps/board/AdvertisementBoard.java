@@ -54,6 +54,9 @@ public class AdvertisementBoard {
                     paymentGateway.advertiserHasFunds(advertisement.advertiser);
             boolean isAdvertisementAlreadyPublished;
             Optional<Advertisement> none = Optional.empty();
+            if (isBoardFull) {
+                throw new AdvertisementBoardException("El tablón está lleno");
+            }
             if (findByTitle(advertisement.title) != none) {
                 isAdvertisementAlreadyPublished = true;
             } else {
