@@ -1,5 +1,6 @@
-package BinarySearchTree.org.mps.tree;
+package binarysearchtree.org.mps.tree;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -8,7 +9,6 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
     private T value;
     private BinarySearchTree<T> left;
     private BinarySearchTree<T> right;
-    private static int contador = 0;
 
     // METODO RENDER PARA MOSTRAR EL ARBOL
     public String render(){
@@ -80,7 +80,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
     @Override
     public boolean contains(T value) {
         if (this.value == null) {
-            throw new BinarySearchTreeException("Árbol vacío");
+            return false;
         }
         int comparison = comparator.compare(value, this.value);
         if (comparison == 0) {
@@ -170,39 +170,87 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
 
     @Override
     public void removeValue (T value) {
-        if(this.value == null) {
+        if (this.value == null) {
             throw new BinarySearchTreeException("Árbol vacío");
         }
-        else if (contains(value) == false) {
+        if (!contains(value)) {
             throw new BinarySearchTreeException("Elemento no presente en el árbol");
         }
-        else {
-            int comparison = comparator.compare(value, this.value);
-            if (comparison == 0) {
-                this.value = null;
-            } else if (comparison < 0 && this.left != null) {
-                if (comparator.compare(value, this.left.value) == 0) {
-                    this.left.value = null;
-                } else {
-                    this.left.removeValue(value);
-                }
-            } else if (comparison > 0 && this.right != null) {
-                if (comparator.compare(value, this.right.value) == 0) {
-                    this.right.value = null;
-                } else {
-                    this.right.removeValue(value);
-                }
-            }
+    
+        int comparison = comparator.compare(value, this.value);
+    
+        if (comparison < 0 && left != null) {
+            if (comparator.compare(value, left.value) == 0) {
+                left = left.removeNode();  // Eliminamos el nodo correctamente
+            } 
+        } else if (comparison > 0 && right != null) {
+            if (comparator.compare(value, right.value) == 0) {
+                right = right.removeNode();  // Eliminamos el nodo correctamente
+            } 
+        } else {
+            BinarySearchTree<T> newNode = removeNode();
+            this.value = newNode != null ? newNode.value : null;
+            this.left = newNode != null ? newNode.left : null;
+            this.right = newNode != null ? newNode.right : null;
         }
+    }
+    private BinarySearchTree<T> removeNode() {
+        // Caso 1: Nodo hoja (sin hijos)
+        if (left == null && right == null) {
+            return null;
+        }
+    
+        // Caso 2: Un solo hijo
+        if (left == null) {
+            return right;
+        }
+        if (right == null) {
+            return left;
+        }
+    
+        // Caso 3: Dos hijos → Reemplazar con el mínimo del subárbol derecho
+        T minValue = right.minimum();
+        this.value = minValue;
+        right.removeValue(minValue);
+        return this;
     }
 
     @Override
     public List<T> inOrder() {
-        return null;
+        List <T> result = new ArrayList<>();
+        if (this.value != null) {
+            if (this.left != null) {
+                result.addAll(this.left.inOrder());
+            }
+            result.add(this.value);
+            if (this.right != null) {
+                result.addAll(this.right.inOrder());
+            }
+        }     
+        return result;
     }
 
     @Override
     public void balance() {
-
+        List<T> values = inOrder();
+        BinarySearchTree<T> balancedTree = new BinarySearchTree<>(comparator);
+        int startIndex = values.size() /2;
+        int majorIndex = startIndex + 1;
+        int minorIndex = startIndex - 1;
+        balancedTree.insert(values.get(startIndex));
+        while (majorIndex < values.size() || minorIndex >= 0) {
+            if (majorIndex < values.size()) {
+                balancedTree.insert(values.get(majorIndex));
+                majorIndex++;
+            }
+            //if (minorIndex >= 0) {
+                balancedTree.insert(values.get(minorIndex));
+                minorIndex--;
+            //}          
+        }
+        this.value = balancedTree.value;
+        this.left = balancedTree.left;
+        this.right = balancedTree.right;
     }
 }
+

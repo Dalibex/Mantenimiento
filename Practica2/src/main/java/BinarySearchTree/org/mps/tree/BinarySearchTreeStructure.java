@@ -1,4 +1,4 @@
-package BinarySearchTree.org.mps.tree;
+package binarysearchtree.org.mps.tree;
 
 import java.util.List;
 
