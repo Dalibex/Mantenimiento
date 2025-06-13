@@ -1,0 +1,19 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Anyadir Cuenta</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="cuenta.css" rel="stylesheet"/>
+</head>
+   
+<body>
+	<h1>Anyadir Cuenta</h1>
+ 
+    <form th:action="@{/cuenta}" th:object="${cuenta}" th:method="post">
+    	<p>CCC: <input type="text" name="ccc" th:field="${cuenta.ccc}" /></p>
+        <p>Balance: <input type="text" name="balance" th:field="${cuenta.balance}" /></p>
+        <p><input class="boton" type="submit" value="Crear Cuenta" /> 
+        <input  class="boton" type="reset" value="Reset" /></p>
+    </form>
+    <a th:href="@{/}">Atrás</a>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Editar Cuenta</title>
+</head>
+<body>
+	    <h1>Editar Cuenta</h1>
+			<form   th:object="${cuenta}"
+				th:action="@{/cuenta}" th:method="put" style="margin: 10px">
+        
+				<p><label>ID</label> <input type="number"
+									th:field="${cuenta.id}"
+									autofocus="autofocus" readonly placeholder="ID"/></p>
+		
+				<p><label>CCC</label> <input type="number"
+									th:field="${cuenta.ccc}"
+									autofocus="autofocus" placeholder="CCC"/> </p>
+					
+				<p><label>Balance</label> <input type="number"
+									th:field="${cuenta.balance}"
+									autofocus="autofocus" placeholder="Balance"  /></p>
+			
+				<button type="submit" >Guardar</button>
+					<a th:href="@{/listCuenta}" >Atras</a>
+			</form>
+</body>
+</html>
